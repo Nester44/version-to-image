@@ -28,6 +28,7 @@ export const fetchAndExtractVersion = async (
     const version = extractVersion(rawFile, side);
 
     return version;
+    // eslint-disable-next-line
   } catch (error: any) {
     throw new Error(`Error while fetching version: ${error.message}`);
   }

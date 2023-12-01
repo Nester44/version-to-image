@@ -14,4 +14,4 @@ app.listen(env.PORT, () => {
   console.log(`App is running on port ${env.PORT}`);
 });
 
-generateApplicationBadges(env.APPLICATION_SHORT_NAMES.slice(0, 5));
+generateApplicationBadges(env.APPLICATION_SHORT_NAMES);

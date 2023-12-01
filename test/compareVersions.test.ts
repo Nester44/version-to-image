@@ -20,8 +20,6 @@ describe('compareVersions', () => {
   });
 
   it("should throw an error if versions aren't comparable", () => {
-    expect(() => compareVersions('1.0.0', '1.0.0.0')).toThrowError(
-      'Versions are not comparable',
-    );
+    expect(() => compareVersions('1.0.0', '1.0.0.0')).toThrow('Versions are not comparable');
   });
 });

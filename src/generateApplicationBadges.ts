@@ -1,13 +1,10 @@
 import { existsSync, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
-import { env } from './env';
 import { ApplicationSide, Color, ComparisonResult, Stage } from './types';
+import { compareVersions } from './utils/compareVersions';
 import { fetchAndExtractVersion } from './utils/fetchAndExtractVersion';
 import { generateImage } from './utils/generateImage';
 import { getCurrentTemplateVersions } from './utils/getCurrentTemplateVersions';
-import { compareVersions } from './utils/compareVersions';
-
-const BASE_URL = env.BITBUCKET_REPOS_URL;
 
 const IMAGES_FOLDER = 'versionImages/';
 
@@ -50,6 +47,7 @@ export const generateApplicationBadges = async (appNames: string[]) => {
           console.log(`${appName.toUpperCase()}-${side}-${stage}-${version}: ✅`);
 
           successCounter++;
+          // eslint-disable-next-line
         } catch (error: any) {
           console.log(error.message);
           console.log(`${appName.toUpperCase()}-${side}-${stage}: ❌`);

@@ -13,9 +13,9 @@ export const generateImage = (version: string, color: Color) => {
 
   const svgContent = `
       <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-        <rect x="0" y="0" width="${width}" height="${height}" rx="${
-          FONT_SIZE / 2
-        }" fill="${color}" />
+        <rect x="0" y="0" width="${width}" height="${height}" rx="${FONT_SIZE / 2}" fill="${
+          colors[color]
+        }" />
         <text x="${
           width / 2
         }" y="${FONT_SIZE}" font-weight="bold" font-size="${FONT_SIZE}px" font-family="Arial" text-anchor="middle" fill="white">${version}</text>
