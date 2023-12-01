@@ -7,3 +7,9 @@ export enum Stage {
   develop = 'develop',
   production = 'production',
 }
+
+export enum ComparisonResult {
+  Equal,
+  Greater,
+  Less,
+}
