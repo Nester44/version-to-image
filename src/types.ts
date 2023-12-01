@@ -13,3 +13,8 @@ export enum ComparisonResult {
   Greater,
   Less,
 }
+
+export enum Color {
+  green = 'green',
+  red = 'red',
+}
