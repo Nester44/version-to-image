@@ -11,6 +11,8 @@ const BASE_URL = env.BITBUCKET_REPOS_URL;
 const IMAGES_FOLDER = 'versionImages/';
 
 export const generateApplicationBadges = async (appNames: string[]) => {
+  console.log('Generating badges...\n');
+
   let requestCounter = 0;
   let successCounter = 0;
 
