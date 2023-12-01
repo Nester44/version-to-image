@@ -1,10 +1,11 @@
 import { existsSync, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
 import { env } from './env';
-import { ApplicationSide, Color, Stage } from './types';
-import { extractVersion } from './utils/extractVersion';
+import { ApplicationSide, Color, ComparisonResult, Stage } from './types';
+import { fetchAndExtractVersion } from './utils/fetchAndExtractVersion';
 import { generateImage } from './utils/generateImage';
-import { getUrl } from './utils/getUrl';
+import { getCurrentTemplateVersions } from './utils/getCurrentTemplateVersions';
+import { compareVersions } from './utils/compareVersions';
 
 const BASE_URL = env.BITBUCKET_REPOS_URL;
 
@@ -12,6 +13,8 @@ const IMAGES_FOLDER = 'versionImages/';
 
 export const generateApplicationBadges = async (appNames: string[]) => {
   console.log('Generating badges...\n');
+
+  const templateVersions = await getCurrentTemplateVersions();
 
   let requestCounter = 0;
   let successCounter = 0;
@@ -24,32 +27,27 @@ export const generateApplicationBadges = async (appNames: string[]) => {
     for (const side of Object.values(ApplicationSide)) {
       for (const stage of Object.values(Stage)) {
         requestCounter++;
-        const url = getUrl(BASE_URL, appName, side, stage);
-
         try {
-          const response = await fetch(url, {
-            headers: { Authorization: `Bearer ${env.BITBUCKET_API_TOKEN}` },
-          });
+          const version = await fetchAndExtractVersion(appName, side, stage);
 
-          if (!response.ok) {
-            throw new Error('Response is not ok');
+          let color: Color;
+
+          switch (compareVersions(version, templateVersions[side])) {
+            case ComparisonResult.Equal:
+              color = Color.green;
+              break;
+            case ComparisonResult.Less:
+              color = Color.red;
+              break;
+            default:
+              color = Color.red;
           }
 
-          const rawFile = await response.text();
-
-          if (!rawFile) {
-            throw new Error('Raw file is empty');
-          }
-
-          const version = extractVersion(rawFile, side);
-
-          const image = generateImage(version, Color.green);
+          const image = generateImage(version, color);
 
           writeFile(`${IMAGES_FOLDER}${appName}-${side}-${stage}.svg`, image);
 
-          console.log(
-            `${appName.toUpperCase()}-${side}-${stage}-${version}: ✅`,
-          );
+          console.log(`${appName.toUpperCase()}-${side}-${stage}-${version}: ✅`);
 
           successCounter++;
         } catch (error: any) {
@@ -61,8 +59,6 @@ export const generateApplicationBadges = async (appNames: string[]) => {
   }
   console.log('\n');
   console.log(`Total number of requests: ${requestCounter}`);
-  console.log(
-    `Number of failed requests: ${requestCounter - successCounter} ❌`,
-  );
+  console.log(`Number of failed requests: ${requestCounter - successCounter} ❌`);
   console.log(`Generated images: ${successCounter} ✅`);
 };
