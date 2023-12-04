@@ -11,8 +11,7 @@ export const env = createEnv({
       .string()
       .min(1)
       .refine((s) => s.split(',').every((code) => code.length === 4), {
-        message:
-          'APPLICATION_SHORT_NAMES must be a comma-separated list of 4-letter codes',
+        message: 'APPLICATION_SHORT_NAMES must be a comma-separated list of 4-letter codes',
       })
       .transform((s) => s.split(',')),
     BITBUCKET_REPOS_URL: z.string().url().min(1),

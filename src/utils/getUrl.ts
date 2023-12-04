@@ -19,5 +19,4 @@ export const getUrl = (
   appName: string,
   side: ApplicationSide,
   stage: Stage,
-): string =>
-  `${baseUrl}${appName}-${versionFilePath[side]}?at=refs%2Fheads%2F${branches[stage]}`;
+): string => `${baseUrl}${appName}-${versionFilePath[side]}?at=refs%2Fheads%2F${branches[stage]}`;
