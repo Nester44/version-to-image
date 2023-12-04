@@ -16,5 +16,6 @@ export enum ComparisonResult {
 
 export enum Color {
   green = 'green',
+  yellow = 'yellow',
   red = 'red',
 }

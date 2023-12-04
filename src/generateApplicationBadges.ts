@@ -1,10 +1,10 @@
 import { existsSync, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
-import { ApplicationSide, Color, ComparisonResult, Stage } from './types';
-import { compareVersions } from './utils/compareVersions';
+import { ApplicationSide, Stage } from './types';
 import { fetchAndExtractVersion } from './utils/fetchAndExtractVersion';
 import { generateImage } from './utils/generateImage';
 import { getCurrentTemplateVersions } from './utils/getCurrentTemplateVersions';
+import { colorsByStatus, getVersionStatus } from './utils/getVersionStatus';
 
 const IMAGES_FOLDER = 'versionImages/';
 
@@ -12,6 +12,11 @@ export const generateApplicationBadges = async (appNames: string[]) => {
   console.log('Generating badges...\n');
 
   const templateVersions = await getCurrentTemplateVersions();
+
+  console.log('Template versions:\n');
+  console.log('frontend: ', templateVersions.frontend.toString());
+  console.log('backend: ', templateVersions.backend.toString());
+  console.log('\n');
 
   let requestCounter = 0;
   let successCounter = 0;
@@ -27,20 +32,10 @@ export const generateApplicationBadges = async (appNames: string[]) => {
         try {
           const version = await fetchAndExtractVersion(appName, side, stage);
 
-          let color: Color;
+          const versionStatus = getVersionStatus(templateVersions[side], version);
+          const color = colorsByStatus[versionStatus];
 
-          switch (compareVersions(version, templateVersions[side])) {
-            case ComparisonResult.Equal:
-              color = Color.green;
-              break;
-            case ComparisonResult.Less:
-              color = Color.red;
-              break;
-            default:
-              color = Color.red;
-          }
-
-          const image = generateImage(version, color);
+          const image = generateImage(version.toString(), color);
 
           writeFile(`${IMAGES_FOLDER}${appName}-${side}-${stage}.svg`, image);
 

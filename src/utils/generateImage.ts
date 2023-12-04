@@ -5,6 +5,7 @@ const FONT_SIZE = 16;
 const colors: Record<Color, string> = {
   green: '#0ea60e',
   red: '#de350b',
+  yellow: '#f9c00c',
 };
 
 export const generateImage = (version: string, color: Color) => {

@@ -5,25 +5,25 @@ describe('version', () => {
     // Arrange
     const versionString = '1.2.3';
     // Act
-    const version = Version.parse(versionString);
+    const version = new Version(versionString);
     // Assert
     expect(version.major).toBe(1);
     expect(version.minor).toBe(2);
     expect(version.patch).toBe(3);
   });
 
-  it('should drop postfixes', () => {
+  it('should not drop postfixes', () => {
     // Arrange
     const versionString = '1.2.3-alpha';
     // Act
-    const version = Version.parse(versionString);
+    const version = new Version(versionString);
     // Assert
-    expect(version.toString()).toBe('1.2.3');
+    expect(version.toString()).toBe('1.2.3-alpha');
   });
 
   it('should convert version to string', () => {
     // Arrange
-    const version = new Version(1, 2, 3);
+    const version = new Version('1.2.3');
     // Act
     const versionString = version.toString();
     // Assert
@@ -32,8 +32,8 @@ describe('version', () => {
 
   it('should diff versions', () => {
     // Arrange
-    const version1 = new Version(2, 3, 4);
-    const version2 = new Version(1, 2, 3);
+    const version1 = new Version('2.3.4');
+    const version2 = new Version('1.2.3');
     // Act
     const diff = version1.diff(version2);
     // Assert
