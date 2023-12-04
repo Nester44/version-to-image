@@ -46,13 +46,13 @@ export const generateApplicationBadges = async (appNames: string[]) => {
           writeFile(`${IMAGES_FOLDER}${appName}-${side}-${stage}.svg`, image);
 
           console.log(
-            `${appName.toUpperCase()}-${side}-${stage}-${version}: ${emojiByStatus[versionStatus]}`,
+            `${emojiByStatus[versionStatus]} ${appName.toUpperCase()}-${side}-${stage}-${version}`,
           );
 
           successCounter++;
           // eslint-disable-next-line
         } catch (error: any) {
-          console.log(`${appName.toUpperCase()}-${side}-${stage}: ❌`);
+          console.log(`❌ ${appName.toUpperCase()}-${side}-${stage}`);
           console.log(error.message);
         }
       }
