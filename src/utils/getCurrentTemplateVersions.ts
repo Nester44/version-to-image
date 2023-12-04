@@ -4,7 +4,7 @@ import Version from './version';
 
 const TEMPLATE_APP_NAME = 'projecttemplate';
 
-export const getCurrentTemplateVersions = async (stage: Stage = Stage.develop) => {
+export const getCurrentTemplateVersions = async (stage: Stage = Stage.production) => {
   const result = {} as Record<ApplicationSide, Version>;
 
   for (const side of Object.values(ApplicationSide)) {

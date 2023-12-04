@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
 import { ApplicationSide, Stage } from './types';
+import { BaseError } from './utils/errors';
 import { fetchAndExtractVersion } from './utils/fetchAndExtractVersion';
 import { generateImage } from './utils/generateImage';
 import { getCurrentTemplateVersions } from './utils/getCurrentTemplateVersions';
@@ -9,7 +10,7 @@ import { VersionStatus, colorsByStatus, getVersionStatus } from './utils/getVers
 const IMAGES_FOLDER = 'versionImages/';
 
 const emojiByStatus: Record<VersionStatus, string> = {
-  [VersionStatus.upToDate]: '✅',
+  [VersionStatus.upToDate]: '🟢',
   [VersionStatus.minorUpdate]: '🟡',
   [VersionStatus.majorUpdate]: '🔴',
 };
@@ -50,10 +51,12 @@ export const generateApplicationBadges = async (appNames: string[]) => {
           );
 
           successCounter++;
-          // eslint-disable-next-line
-        } catch (error: any) {
-          console.log(`❌ ${appName.toUpperCase()}-${side}-${stage}`);
-          console.log(error.message);
+        } catch (error) {
+          if (error instanceof BaseError) {
+            console.log(error.message);
+          } else {
+            throw error;
+          }
         }
       }
     }
