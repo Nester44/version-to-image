@@ -4,9 +4,15 @@ import { ApplicationSide, Stage } from './types';
 import { fetchAndExtractVersion } from './utils/fetchAndExtractVersion';
 import { generateImage } from './utils/generateImage';
 import { getCurrentTemplateVersions } from './utils/getCurrentTemplateVersions';
-import { colorsByStatus, getVersionStatus } from './utils/getVersionStatus';
+import { VersionStatus, colorsByStatus, getVersionStatus } from './utils/getVersionStatus';
 
 const IMAGES_FOLDER = 'versionImages/';
+
+const emojiByStatus: Record<VersionStatus, string> = {
+  [VersionStatus.upToDate]: '✅',
+  [VersionStatus.minorUpdate]: '🟡',
+  [VersionStatus.majorUpdate]: '🔴',
+};
 
 export const generateApplicationBadges = async (appNames: string[]) => {
   console.log('Generating badges...\n');
@@ -39,13 +45,15 @@ export const generateApplicationBadges = async (appNames: string[]) => {
 
           writeFile(`${IMAGES_FOLDER}${appName}-${side}-${stage}.svg`, image);
 
-          console.log(`${appName.toUpperCase()}-${side}-${stage}-${version}: ✅`);
+          console.log(
+            `${appName.toUpperCase()}-${side}-${stage}-${version}: ${emojiByStatus[versionStatus]}`,
+          );
 
           successCounter++;
           // eslint-disable-next-line
         } catch (error: any) {
-          console.log(error.message);
           console.log(`${appName.toUpperCase()}-${side}-${stage}: ❌`);
+          console.log(error.message);
         }
       }
     }
