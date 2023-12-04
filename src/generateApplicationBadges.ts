@@ -21,8 +21,8 @@ export const generateApplicationBadges = async (appNames: string[]) => {
   const templateVersions = await getCurrentTemplateVersions();
 
   console.log('Template versions:\n');
-  console.log('frontend: ', templateVersions.frontend.toString());
-  console.log('backend: ', templateVersions.backend.toString());
+  console.log('frontend: ' + templateVersions.frontend);
+  console.log('backend: ' + templateVersions.backend);
   console.log('\n');
 
   let requestCounter = 0;
