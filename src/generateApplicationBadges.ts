@@ -23,10 +23,11 @@ export const generateApplicationBadges = async (appNames: string[]) => {
   console.log('Template versions:\n');
   console.log('frontend: ' + templateVersions.frontend);
   console.log('backend: ' + templateVersions.backend);
-  console.log('\n');
+  console.log();
 
   let requestCounter = 0;
   let successCounter = 0;
+  const failedRequests: string[] = [];
 
   if (!existsSync(IMAGES_FOLDER)) {
     mkdirSync(IMAGES_FOLDER);
@@ -46,14 +47,14 @@ export const generateApplicationBadges = async (appNames: string[]) => {
 
           writeFile(`${IMAGES_FOLDER}${appName}-${side}-${stage}.svg`, image);
 
-          console.log(
-            `${emojiByStatus[versionStatus]} ${appName.toUpperCase()}-${side}-${stage}-${version}`,
-          );
+          console.log(`${emojiByStatus[versionStatus]} ${appName}-${side}-${stage} ${version}`);
 
           successCounter++;
         } catch (error) {
+          failedRequests.push(`${appName}-${side}-${stage}`);
+
           if (error instanceof BaseError) {
-            console.log(error.message);
+            console.log(error.message + ` ${appName}-${side}-${stage}`);
           } else {
             throw error;
           }
@@ -61,8 +62,11 @@ export const generateApplicationBadges = async (appNames: string[]) => {
       }
     }
   }
-  console.log('\n');
-  console.log(`Total number of requests: ${requestCounter}`);
+  console.log();
   console.log(`Number of failed requests: ${requestCounter - successCounter} ❌`);
+  console.log(failedRequests);
+  console.log();
+
+  console.log(`Total number of requests: ${requestCounter}`);
   console.log(`Generated images: ${successCounter} ✅`);
 };

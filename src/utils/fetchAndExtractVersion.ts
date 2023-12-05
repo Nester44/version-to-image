@@ -15,7 +15,7 @@ export const fetchAndExtractVersion = async (
   });
 
   if (!response.ok) {
-    throw new FetchError(`Could not fetch ${appName}-${side}-${stage}`);
+    throw new FetchError(`Could not fetch`);
   }
 
   const rawFile = await response.text();
