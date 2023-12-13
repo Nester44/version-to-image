@@ -65,6 +65,7 @@ These environment variables are defined in `src/env.ts`.
 ## Docker Support
 
 The application also includes a Dockerfile for building a Docker image of the application. To build the Docker image, run `docker build -t version-to-image ..` To run the Docker image, use `docker run -p 8080:8080 version-to-image`.
+You will also need to pass environmental variables. You can pass variables from .env file to container with `--env-file ./.env`.
 
 ### Proxy
 
