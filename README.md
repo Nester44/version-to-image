@@ -20,7 +20,7 @@ The `fetchAndExtractVersion` function constructs the URL to the raw file contain
 
 ### Extraction Process
 
-The `extractVersion` function uses different logic to extract the version depending on whether the application side is frontend or backend. For the frontend, it parses the raw file as JSON and returns the `version` property. For the backend, it uses regular expressions to find the platform version in the raw file.
+The `extractVersion` function uses different logic to extract the version depending on whether the application side is frontend or backend. For the frontend, it parses the raw file as JSON and returns the `version` property. For the backend, it uses regular expressions to find the platform version in the raw build.gradle file.
 
 ### Generating Images
 
