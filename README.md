@@ -38,6 +38,8 @@ The versions of the applications are also compared to the current template versi
 
 The project is built using TypeScript and Node.js, and uses npm for package management. The build and run scripts are defined in `package.json`. The project also includes unit tests using Jest, with test files located in the `test` folder.
 
+*Node 18.12 > is required*
+
 ## How to start the application
 
 1. Clone the repository to your local machine.
