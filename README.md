@@ -20,7 +20,7 @@ The `fetchAndExtractVersion` function constructs the URL to the raw file contain
 
 ### Extraction Process
 
-The `extractVersion` function uses different logic to extract the version depending on whether the application side is frontend or backend. For the frontend, it parses the raw file as JSON and returns the `version` property. For the backend, it uses regular expressions to find the platform version in the raw build.gradle file.
+The `extractVersion` function uses different logic to extract the version depending on whether the application side is frontend or backend. For the frontend, it parses the raw file as JSON and returns the `version` property. For the backend, it uses regular expressions to find the platform version in the raw `build.gradle` file.
 
 ### Generating Images
 
@@ -44,7 +44,8 @@ The project is built using TypeScript and Node.js, and uses npm for package mana
 2. Navigate to the project directory.
 3. Install the project dependencies by running `npm install`.
 4. Build the project by running `npm run build`.
-5. Start the application by running `npm start`.
+5. Copy `.env.example` to `.env` add values
+6. Start the application by running `npm start`.
 
 The application will start and listen on the port specified in the environment variable `PORT`. If `PORT` is not specified, it defaults to `8080`.
 
@@ -62,6 +63,11 @@ These environment variables are defined in `src/env.ts`.
 ## Docker Support
 
 The application also includes a Dockerfile for building a Docker image of the application. To build the Docker image, run `docker build -t version-to-image ..` To run the Docker image, use `docker run -p 8080:8080 version-to-image`.
+
+### Proxy
+
+If you are behind proxy you would need to specify `HTTP_PROXY` and `HTTPS_PROXY` with `--build-arg`.
+Example: `docker build -t version-to-image . --build-arg HTTP_PROXY=$HTTP_PROXY --build-arg HTTPS_PROXY=$HTTP_PROXY`
 
 ## Testing
 
