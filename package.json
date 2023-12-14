@@ -9,6 +9,7 @@
   "scripts": {
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.release.json",
+    "prestart": "npm run build",
     "start": "node build/src/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "lint": "eslint . --ext .ts --ext .mts",
