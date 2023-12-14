@@ -3,17 +3,20 @@ import { env } from './env';
 import { generateApplicationBadges } from './generateApplicationBadges';
 import express from 'express';
 
-scheduleJob('0 */2 * * *', () => generateApplicationBadges(env.APPLICATION_SHORT_NAMES));
+const IMAGES_FOLDER = 'versionImages/';
+
+
+scheduleJob('0 */2 * * *', () => generateApplicationBadges(env.APPLICATION_SHORT_NAMES, IMAGES_FOLDER));
 
 const app = express();
 
-generateApplicationBadges(env.APPLICATION_SHORT_NAMES);
+generateApplicationBadges(env.APPLICATION_SHORT_NAMES, IMAGES_FOLDER);
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send('App is running');
 });
 
-app.use(express.static('versionImages'));
+app.use(express.static(IMAGES_FOLDER));
 
 app.listen(env.PORT, () => {
   console.log(`App is running on port ${env.PORT}`);

@@ -2,14 +2,12 @@ class Version {
   public major: number;
   public minor: number;
   public patch: number;
-  public fullVersion: string;
 
-  constructor(version: string) {
-    const [major, minor, patch] = version.split('.').map((v) => parseInt(v, 10));
+  constructor(private fullVersion: string) {
+    const [major, minor, patch] = fullVersion.split('.').map((v) => parseInt(v, 10));
     this.major = major;
     this.minor = minor;
     this.patch = patch;
-    this.fullVersion = version;
   }
 
   public toString(): string {

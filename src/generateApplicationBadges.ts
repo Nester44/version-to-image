@@ -7,9 +7,8 @@ import { generateImage } from './utils/generateImage';
 import { getCurrentTemplateVersions } from './utils/getCurrentTemplateVersions';
 import { colorsByStatus, emojiByStatus, getVersionStatus } from './utils/getVersionStatus';
 
-const IMAGES_FOLDER = 'versionImages/';
 
-export const generateApplicationBadges = async (appNames: string[]) => {
+export const generateApplicationBadges = async (appNames: string[], imagesFolder: string) => {
   console.log('Generating badges...\n');
 
   const templateVersions = await getCurrentTemplateVersions();
@@ -23,8 +22,8 @@ export const generateApplicationBadges = async (appNames: string[]) => {
   let successCounter = 0;
   const failedRequests: string[] = [];
 
-  if (!existsSync(IMAGES_FOLDER)) {
-    mkdirSync(IMAGES_FOLDER);
+  if (!existsSync(imagesFolder)) {
+    mkdirSync(imagesFolder);
   }
 
   for (const appName of appNames) {
@@ -39,7 +38,7 @@ export const generateApplicationBadges = async (appNames: string[]) => {
 
           const image = generateImage(version.toString(), color);
 
-          writeFile(`${IMAGES_FOLDER}${appName}-${side}-${stage}.svg`, image);
+          writeFile(`${imagesFolder}${appName}-${side}-${stage}.svg`, image);
 
           console.log(`${emojiByStatus[versionStatus]} ${appName}-${side}-${stage} ${version}`);
 
