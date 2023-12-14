@@ -7,7 +7,6 @@ import { generateImage } from './utils/generateImage';
 import { getCurrentTemplateVersions } from './utils/getCurrentTemplateVersions';
 import { colorsByStatus, emojiByStatus, getVersionStatus } from './utils/getVersionStatus';
 
-
 export const generateApplicationBadges = async (appNames: string[], imagesFolder: string) => {
   console.log('Generating badges...\n');
 

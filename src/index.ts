@@ -5,8 +5,9 @@ import express from 'express';
 
 const IMAGES_FOLDER = 'versionImages/';
 
-
-scheduleJob('0 */2 * * *', () => generateApplicationBadges(env.APPLICATION_SHORT_NAMES, IMAGES_FOLDER));
+scheduleJob('0 */2 * * *', () =>
+  generateApplicationBadges(env.APPLICATION_SHORT_NAMES, IMAGES_FOLDER),
+);
 
 const app = express();
 
