@@ -24,3 +24,9 @@ export const colorsByStatus: Record<VersionStatus, Color> = {
   [VersionStatus.minorUpdate]: Color.yellow,
   [VersionStatus.majorUpdate]: Color.red,
 };
+
+export const emojiByStatus: Record<VersionStatus, string> = {
+  [VersionStatus.upToDate]: '🟢',
+  [VersionStatus.minorUpdate]: '🟡',
+  [VersionStatus.majorUpdate]: '🔴',
+};

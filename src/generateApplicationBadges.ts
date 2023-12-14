@@ -5,15 +5,9 @@ import { BaseError } from './utils/errors';
 import { fetchAndExtractVersion } from './utils/fetchAndExtractVersion';
 import { generateImage } from './utils/generateImage';
 import { getCurrentTemplateVersions } from './utils/getCurrentTemplateVersions';
-import { VersionStatus, colorsByStatus, getVersionStatus } from './utils/getVersionStatus';
+import { colorsByStatus, emojiByStatus, getVersionStatus } from './utils/getVersionStatus';
 
 const IMAGES_FOLDER = 'versionImages/';
-
-const emojiByStatus: Record<VersionStatus, string> = {
-  [VersionStatus.upToDate]: '🟢',
-  [VersionStatus.minorUpdate]: '🟡',
-  [VersionStatus.majorUpdate]: '🔴',
-};
 
 export const generateApplicationBadges = async (appNames: string[]) => {
   console.log('Generating badges...\n');
